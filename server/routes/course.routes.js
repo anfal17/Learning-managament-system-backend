@@ -8,7 +8,7 @@ import {
   addLectureToCourseById,
   
 } from "../controllers/course.controller";
-import { isLoggedIn, authorizedRoles } from "../middlewares/auth.middleware";
+import { isLoggedIn,authorizedSubscriber, authorizedRoles } from "../middlewares/auth.middleware";
 
 const router = Router();
 
@@ -24,7 +24,7 @@ router
 
 router
   .route("/:id")
-  .get(isLoggedIn, getLecturesByCourseId)
+  .get(isLoggedIn,authorizedSubscriber, getLecturesByCourseId)
   .put(isLoggedIn, authorizedRoles("ADMIN"), updateCourse)
   .delete(isLoggedIn, authorizedRoles("ADMIN"), removeCourse)
   .post(
